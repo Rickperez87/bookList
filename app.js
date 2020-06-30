@@ -22,6 +22,19 @@ class UI {
       UI.addBook(book);
     });
   }
+  // displayAlert
+  static displayAlert(message, type) {
+    let div = document.createElement("div");
+    let para = document.createElement("p");
+    para.innerHTML = message;
+    div.appendChild(para);
+    div.className = type;
+    let container = document.querySelector(".container");
+    let form = document.querySelector("#form");
+    container.insertBefore(div, form);
+
+    setTimeout(() => document.querySelector(".alert").remove(), 3000);
+  }
   // add book to UI
   static addBook(book) {
     let bookList = document.getElementById("book-list");
@@ -56,10 +69,19 @@ addEventListener("submit", (e) => {
   let title = document.querySelector("#title").value;
   let author = document.querySelector("#author").value;
   let ibsn = document.querySelector("#ibsn").value;
+  // validation required
+  if (title === "" || author === "" || ibsn === "") {
+    UI.displayAlert("All fields are required", "alert danger");
+  }
   // create book object using constructor
-  const book = new Book(title, author, ibsn);
-  UI.addBook(book);
-  UI.clearSubmit();
+  else {
+    const book = new Book(title, author, ibsn);
+    UI.addBook(book);
+    // validation success
+    UI.displayAlert("Book Added", "alert success");
+
+    UI.clearSubmit();
+  }
 });
 // remove book event
 let list = document

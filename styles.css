@@ -83,3 +83,20 @@ td {
 #book-list:nth-child(odd) {
   background: #e63946;
 }
+/* validation styles */
+.alert {
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0px 1rem;
+  margin-bottom: 0.5rem;
+}
+.danger {
+  background: #ee6633;
+  color: white;
+}
+.success {
+  background: green;
+  color: white;
+}
