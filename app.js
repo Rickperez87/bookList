@@ -12,13 +12,9 @@ class UI {
   constructor() {}
 
   // display book list
-  static displayBookList(book) {
-    let storedBooks = [
-      { title: "Book 1", author: "Mike", ibsn: 12345 },
-      { title: "Book 2", author: "Kevin", ibsn: 12346 },
-    ];
-    let books = storedBooks;
-    books.forEach((book) => {
+  static displayBookList() {
+    let storedBooks = store.getBooks();
+    storedBooks.forEach((book) => {
       UI.addBook(book);
     });
   }
@@ -56,7 +52,24 @@ class UI {
   }
 }
 // class for storing books
+class store {
+  constructor() {}
+  static getBooks() {
+    let books;
+    if (localStorage.getItem("books") === null) {
+      books = [];
+    } else {
+      books = JSON.parse(localStorage.getItem("books"));
+    }
+    return books;
+  }
 
+  static addBook(book) {
+    const books = store.getBooks();
+    books.push(book);
+    localStorage.setItem("books", JSON.stringify(books));
+  }
+}
 // event listners -->
 
 // display books event
@@ -81,6 +94,7 @@ addEventListener("submit", (e) => {
     UI.displayAlert("Book Added", "alert success");
 
     UI.clearSubmit();
+    store.addBook(book);
   }
 });
 // remove book event
